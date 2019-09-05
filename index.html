@@ -6,19 +6,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="This is an app that provides recipes and videos based on the user's ingredient inputs.">
         <link rel="stylesheet" href="main.css">
+        <!--<link href="https://fonts.googleapis.com/css?family=Montserrat:400,800|Oswald&display=swap" rel="stylesheet">-->
     </head>
     <body>
         <header class="app-title">
-            <h1>The Refrigerator Raider!</h1>
-            <h3>Use up your extra ingredients.</h3>
-            <h5>Because throwing food away is lame.</h5>
+            <h1 class="main-title">The Refrigerator Raider!</h1>
+            <h3 class="sub-title">Use up your extra ingredients.</h3>
+            <h5 class="sub-sub-title">Because throwing food away is lame.</h5>
         </header>
         <form>
             <fieldset>
                 <label for="requested-ingredients">What ingredients do you have?</label>
                 <input id="requested-ingredients" type="text" placeholder="onion, rice, peanut butter" required>
+                <div class="clear-wrapper"><button type="reset" class="clear-ingredients">X</button></div>
                 <h6>(separate multiple ingredients with a comma)</h6>
-                <button type="submit">Find Recipes!</button>
+                <button class="find-recipes" type="submit">Find Recipes!</button>
             </fieldset>
         </form>
         <section class="results hidden"></section>

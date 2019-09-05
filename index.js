@@ -10,9 +10,17 @@ let firstRecipeToDisplay;
 let lastRecipeToDisplay;
 let totalRecipes;
 
-const youTubeApiKey = 'AIzaSyBZ7XLIPc0oHjQY3J9vd_3ipvRQO6QOZqs'
-const youTubeUrl = 'https://www.googleapis.com/youtube/v3/search'
+const youTubeApiKey = 'AIzaSyBZ7XLIPc0oHjQY3J9vd_3ipvRQO6QOZqs';
+const youTubeUrl = 'https://www.googleapis.com/youtube/v3/search';
 let youTubeClips;
+
+let waitingMessages = [
+    "Whipping up some killer recipes. Sit tight!",
+    "Get your apron ready. Delicious recipes are on the way!",
+    "Scouring the series of tubes that is the Internet for some tremendous recipes. Standby!",
+    "Buckle up for a party in your kitchen. Recipes are on the way!",
+    "Please wait while a team of personal chefs prepares your recipes. Just kidding, it's only robots."
+];
 
 //reset the variables to simulate an initial page load
 function resetVariables() {
@@ -40,24 +48,59 @@ function noYouTubeResults(recipeId) {
     $(`#youtube-clips-${recipeId}`).empty().append('No clips available. This must be an exotic and rare recipe! Do you feel daring?');
 }
 
+//make the selected youtube clip big
+function watchForYouTubeClick() {
+    $('.youtube-embed, .play-icon').off('click');
+    $('.youtube-embed, .play-icon').on('click', function() {
+        $('.youtube-clip').removeClass('make-it-big');
+        $('iframe.youtube-embed').addClass('hidden');
+        $('img.youtube-embed').removeClass('hidden');
+        $('img.play-icon').removeClass('hidden');
+        $(this).parent().parent().parent().addClass('youtube-clips-flex');
+        $(this).parent().parent().addClass('make-it-big');
+        $(this).addClass('hidden');
+        $(this).siblings().addClass('hidden');
+        $(this).siblings('iframe').removeClass('hidden');
+    });
+}
+
 //display the youtube clip results
 function logYouTubeResults(recipeId) {
-    $(`#youtube-clips-${recipeId}`).empty().append(`<a class="youtube-link" href="https://www.youtube.com/watch?v=${youTubeClips.items[0].id.videoId}">
-                    <img class="youtube-image" src=${youTubeClips.items[0].snippet.thumbnails.default.url}>
-                    ${youTubeClips.items[0].snippet.title.slice(0,48)}...
-                </a>
-                <a class="youtube-link" href="https://www.youtube.com/watch?v=${youTubeClips.items[1].id.videoId}">
-                    <img class="youtube-image" src=${youTubeClips.items[1].snippet.thumbnails.default.url}>
-                    ${youTubeClips.items[1].snippet.title.slice(0,48)}...
-                </a>
-                <a class="youtube-link" href="https://www.youtube.com/watch?v=${youTubeClips.items[2].id.videoId}">
-                    <img class="youtube-image" src=${youTubeClips.items[2].snippet.thumbnails.default.url}>
-                    ${youTubeClips.items[2].snippet.title.slice(0,48)}...
-                </a>
-                <a class="youtube-link" href="https://www.youtube.com/watch?v=${youTubeClips.items[3].id.videoId}">
-                    <img class="youtube-image" src=${youTubeClips.items[3].snippet.thumbnails.default.url}>
-                    ${youTubeClips.items[3].snippet.title.slice(0,48)}...
-                </a>`);           
+    $(`#youtube-clips-${recipeId}`).empty().append(`
+        <div class="youtube-clip">
+            <div class="aspect-ratio">
+                <img class="youtube-embed" src=${youTubeClips.items[0].snippet.thumbnails.default.url}>
+                <img class="play-icon" src="images/play-button.jpg">
+                <iframe class="youtube-embed hidden" src="https://www.youtube.com/embed/${youTubeClips.items[1].id.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="youtube-embed-caption">${youTubeClips.items[0].snippet.title.slice(0,48)}...</div>
+        </div>
+        <div class="youtube-clip">
+            <div class="aspect-ratio">
+                <img class="youtube-embed" src=${youTubeClips.items[1].snippet.thumbnails.default.url}>
+                <img class="play-icon" src="images/play-button.jpg">
+                <iframe class="youtube-embed hidden" src="https://www.youtube.com/embed/${youTubeClips.items[1].id.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="youtube-embed-caption">${youTubeClips.items[1].snippet.title.slice(0,48)}...</div>
+        </div>
+        <div class="youtube-clip">
+            <div class="aspect-ratio">
+                <img class="youtube-embed" src=${youTubeClips.items[2].snippet.thumbnails.default.url}>
+                <img class="play-icon" src="images/play-button.jpg">
+                <iframe class="youtube-embed hidden" src="https://www.youtube.com/embed/${youTubeClips.items[2].id.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="youtube-embed-caption">${youTubeClips.items[2].snippet.title.slice(0,48)}...</div>
+        </div>
+        <div class="youtube-clip">
+            <div class="aspect-ratio">
+                <img class="youtube-embed" src=${youTubeClips.items[3].snippet.thumbnails.default.url}>
+                <img class="play-icon" src="images/play-button.jpg">
+                <iframe class="youtube-embed hidden" src="https://www.youtube.com/embed/${youTubeClips.items[3].id.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="youtube-embed-caption">${youTubeClips.items[3].snippet.title.slice(0,48)}...</div>
+        </div>
+    `);
+    watchForYouTubeClick();
 }
 
 //display a message to the DOM if the youtube API fetch fails
@@ -70,10 +113,12 @@ function getYouTubeClips(recipeTitle, recipeId) {
     const params = {
         key: youTubeApiKey,
         q: recipeTitle,
-        part: 'snippet'
+        part: 'snippet',
+        type: 'video',
+        videoEmbeddable: true
     };
     const queryString = formatQueryString(params);
-    const fetchUrl = youTubeUrl + '?' + queryString;    
+    const fetchUrl = youTubeUrl + '?' + queryString;
     fetch(fetchUrl)
         .then(fetchResponse => {
             if (fetchResponse.ok) {
@@ -103,6 +148,7 @@ function getYouTubeClips(recipeTitle, recipeId) {
 function watchForRecipeClick() {
     $('.recipe').off('click');
     $('.recipe').on('click', function() {
+        $('.youtube-clips').removeClass('youtube-clips-flex');
         $(`.recipe`).removeClass('clicked-recipe');
         $(`#${$(this).attr('id')}`).addClass('clicked-recipe');
         $(`.more-recipe-info`).addClass('hidden');
@@ -111,18 +157,20 @@ function watchForRecipeClick() {
         const recipeId = $(this).attr('id');
         getYouTubeClips(recipeTitle, recipeId);
         getIngredients(recipeId);
+        window.scrollTo(0, $(this).offset().top - $('.app-title').height());
     });
 }
 
 //display message to DOM if there aren't any more recipes to display
 function noResultsToLog() {
     $('.no-more-recipes').removeClass('hidden');
+    $('.load-more-recipes').addClass('hidden');
 }
 
 //display the first set of recipes
 function firstResultsLog() {
     $('.results').empty().removeClass('hidden');
-    $('.results').append(`<h2 class="results-title">Recipe Results</h2>`);
+    $('.results').append(`<h2 class="results-title">Recipe Results</h2><h3 class="results-subtitle">${$('#requested-ingredients').val()}</h3>`);
     if (totalRecipes == 0) {
         $('.results').append(`<div class="no-results">
             No recipes were found! You've got such crazy things in your refrigerator that you broke the 
@@ -205,35 +253,38 @@ function formatQueryString (params) {
 function getRecipes() {
     $('.load-more-recipes').addClass('hidden');
     $('.no-more-recipes').addClass('hidden');
-    $('.results').empty().removeClass('hidden').append(`Whipping up some killer recipes. Sit tight!`);
-    const requestedIngredients = $('#requested-ingredients').val();
-    const params = {
-        q: requestedIngredients,
-        app_id: edamamAppId,
-        app_key: edamamApiKey,
-        from: 0,
-        to: maxResults};
-    const queryString = formatQueryString(params);
-    const fetchUrl = edamamApiUrl + '?' + queryString;
-    fetch(fetchUrl)
-        .then(fetchResponse => {
-            if (fetchResponse.ok) {
-                return fetchResponse.json();
-            }
-            else {
-                console.log('throw! ' + fetchResponse.statusText);
-                throw new Error(fetchResponse.statusText);
-            }
-        })
-        .then(jsonResponse => {
-            returnedRecipes = jsonResponse;
-            totalRecipes = returnedRecipes.count;
-            console.log(returnedRecipes);
-            logResults();
-        })
-        .catch(error => {
-            fetchRecipeError(error.message);
-        });
+    $('.results').empty().removeClass('hidden').append(`<h3 class="waiting-on-api">${waitingMessages[Math.floor(Math.random() * waitingMessages.length)]}</h3>
+        <img class="chef-gif" src="images/chef.gif">`);
+    setTimeout(function(){
+        const requestedIngredients = $('#requested-ingredients').val();
+        const params = {
+            q: requestedIngredients,
+            app_id: edamamAppId,
+            app_key: edamamApiKey,
+            from: 0,
+            to: maxResults};
+        const queryString = formatQueryString(params);
+        const fetchUrl = edamamApiUrl + '?' + queryString;
+        fetch(fetchUrl)
+            .then(fetchResponse => {
+                if (fetchResponse.ok) {
+                    return fetchResponse.json();
+                }
+                else {
+                    console.log('throw! ' + fetchResponse.statusText);
+                    throw new Error(fetchResponse.statusText);
+                }
+            })
+            .then(jsonResponse => {
+                returnedRecipes = jsonResponse;
+                totalRecipes = returnedRecipes.count;
+                console.log(returnedRecipes);
+                logResults();
+            })
+            .catch(error => {
+                fetchRecipeError(error.message);
+            });
+    },2000);
 }
 
 //watch for user to click the button to load more recipes

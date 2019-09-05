@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /*font-family: 'Oswald', sans-serif;*/
 }
 
 header {
@@ -9,7 +10,24 @@ header {
     top: 0;
     width: 100%;
     background-color: gray;
+    z-index: 1;
 }
+
+/*.main-title {
+    /*font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.sub-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.sub-sub-title {
+
+}*/
 
 body {
     padding-top: 100px;
@@ -18,12 +36,26 @@ body {
 
 fieldset {
     border: none;
+    text-align: center;
 }
 
-label, input, button {
+label, .find-recipes, .load-more-recipes {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.clear-wrapper {
+    display: inline-block;
+    position: relative;
+    width: 0;
+    height: 0;
+    vertical-align: middle;
+}
+
+.clear-ingredients {
+    position: absolute;
+    transform: translate(0,-50%);
 }
 
 h1, h3, h4, h5, h6, label {
@@ -42,8 +74,16 @@ footer {
     text-align: center;
 }
 
+.chef-gif {
+    border-radius: 20px;
+    width: 90%;
+}
+
 .results-title {
     padding-top: 20px;
+}
+
+.results-subtitle {
     padding-bottom: 10px;
     border-bottom: 1px black solid
 }
@@ -82,13 +122,49 @@ footer {
 }
 
 .youtube-clips {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
     padding-bottom: 10px;
 }
 
-.youtube-link {
+.youtube-clips-flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.youtube-clip {
+    width: 47.5%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.make-it-big {
+    width: 95%;
+}
+
+.aspect-ratio {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+}
+
+.youtube-embed {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+}
+
+.play-icon {
+    position: absolute;
+    width: 25%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.youtube-embed-caption {
     text-decoration: none;
     color: black;
     font-size: 8px;
