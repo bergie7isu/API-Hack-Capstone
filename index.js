@@ -35,11 +35,11 @@ function logIngredients(recipeLocator, recipeIngredients) {
 //create the list of ingredients for a recipe
 function getIngredients(recipeId) {
     let recipeLocator = recipeId.slice(6);
-    let recipeIngredients = '<h4 class="recipe-detail-header">Ingredients List</h4><ul class="ingredient-list">';
+    let recipeIngredients = '<h4 class="recipe-detail-header">Ingredient List</h4><ul class="ingredient-list">';
     for (let j = 0; j < returnedRecipes.hits[recipeLocator].recipe.ingredientLines.length; j++) {
-        recipeIngredients = recipeIngredients + `<li>${returnedRecipes.hits[recipeLocator].recipe.ingredientLines[j]}</li>`;
+        recipeIngredients = recipeIngredients + `<li class="ingredient">${returnedRecipes.hits[recipeLocator].recipe.ingredientLines[j]}</li>`;
     }
-    recipeIngredients = recipeIngredients + `</ul><a class="recipe-link" href="${returnedRecipes.hits[recipeLocator].recipe.url}">Link to Full Recipe</a>`;
+    recipeIngredients = recipeIngredients + `</ul><a class="recipe-link" target="_blank" href="${returnedRecipes.hits[recipeLocator].recipe.url}">Link to Full Recipe</a>`;
     logIngredients(recipeLocator, recipeIngredients);
 }
 
@@ -157,7 +157,7 @@ function watchForRecipeClick() {
         const recipeId = $(this).attr('id');
         getYouTubeClips(recipeTitle, recipeId);
         getIngredients(recipeId);
-        window.scrollTo(0, $(this).offset().top - $('.app-title').height());
+        window.scrollTo(0, $(this).offset().top - $('.app-title').outerHeight());
     });
 }
 
@@ -186,7 +186,7 @@ function firstResultsLog() {
                                     <div class="more-recipe-info hidden" id="more-recipe-info-recipe${i}">
                                         <div class="recipe-details" id="details-recipe${i}"></div>
                                         <div class="youtube" id="youtube-recipe${i}">
-                                            <h4 class="recipe-detail-header">Related YouTube Clips</h4>
+                                            <h4 class="youtube-header">Related YouTube Clips</h4>
                                             <div class="youtube-clips" id="youtube-clips-recipe${i}"></div>
                                         </div>
                                     </div>
@@ -208,7 +208,7 @@ function additionalResultsLog() {
                                 <div class="more-recipe-info hidden" id="more-recipe-info-recipe${i}">
                                     <div class="recipe-details" id="details-recipe${i}"></div>
                                     <div class="youtube" id="youtube-recipe${i}">
-                                        <h4 class="recipe-detail-header">Related YouTube Clips</h4>
+                                        <h4 class="youtube-header">Related YouTube Clips</h4>
                                         <div class="youtube-clips" id="youtube-clips-recipe${i}"></div>
                                     </div>
                                 </div>
@@ -294,6 +294,18 @@ function watchForLoadMoreRecipesClick() {
     });
 }
 
+//adjust the body padding based on the height of the header and footer
+function bodyPadding() {
+    let headerHeight = $('header').height();
+    let footerHeight = $('footer').height();
+    $('body').css({"padding-top": headerHeight + 20 + "px","padding-bottom": footerHeight});
+}
+
+//check the body padding if the window is resized
+function windowResize() {
+    window.addEventListener("resize", bodyPadding);
+}
+
 //watch for user to click the submit button
 function watchForSubmit() {
     $('form').submit(function(event) {
@@ -302,6 +314,8 @@ function watchForSubmit() {
         getRecipes();
     });
     watchForLoadMoreRecipesClick();
+    bodyPadding();
+    windowResize();
 }
 
 //ready

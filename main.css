@@ -2,36 +2,49 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /*font-family: 'Oswald', sans-serif;*/
+    font-family: 'Oswald', sans-serif;
 }
 
 header {
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: gray;
+    background-color: #629CFF;
     z-index: 1;
+    padding: 5px;
+    text-align: center;
+    min-width: 320px;
+    border-bottom: 1px solid black;
 }
 
-/*.main-title {
-    /*font-family: 'Montserrat', sans-serif;
+.main-title {
+    font-family: 'Montserrat', sans-serif;
     font-size: 24px;
     font-weight: 800;
 }
 
+.sub-title-wrapper {
+    display: inline-block;
+    vertical-align: middle;
+}
+
 .sub-title {
     font-family: 'Montserrat', sans-serif;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 400;
 }
 
 .sub-sub-title {
+    font-size: 13px;
+}
 
-}*/
+.logo {
+    width: 50px;
+    vertical-align: middle;
+}
 
 body {
-    padding-top: 100px;
-    padding-bottom: 25px;
+    background-color: #D2D0D6;
 }
 
 fieldset {
@@ -39,10 +52,44 @@ fieldset {
     text-align: center;
 }
 
-label, .find-recipes, .load-more-recipes {
+label {
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.find-recipes, .load-more-recipes {
     display: block;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 20px;
+}
+
+.orange-button {
+    background-color: #FF7111;
+    border-radius: 5px;
+    border-color: #A2A0A3;
+    transition-duration: 0.4s;
+}
+
+.orange-button:hover {
+    background-color: #FF440D;
+    cursor: pointer;
+}
+
+input {
+    width: 60%;
+    height: 35px;
+    font-size: 14px;
+    vertical-align: middle;
+    text-align: center;
+    border-radius: 5px;
+    border-color: #A2A0A3;
 }
 
 .clear-wrapper {
@@ -56,6 +103,12 @@ label, .find-recipes, .load-more-recipes {
 .clear-ingredients {
     position: absolute;
     transform: translate(0,-50%);
+    width: 25px;
+    font-size: 16px;
+}
+
+.input-instructions {
+    font-size: 10px;
 }
 
 h1, h3, h4, h5, h6, label {
@@ -67,11 +120,21 @@ footer {
     bottom: 0;
     width: 100%;
     text-align: center;
-    background-color: gray;
+    background-color: #A2A0A3;
+    font-size: 14px;
+    border-top: 1px solid black;
 }
 
 .results {
     text-align: center;
+    border-top: 1px solid black;
+}
+
+.waiting-on-api {
+    width: 80%;
+    font-size: 18px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .chef-gif {
@@ -80,12 +143,20 @@ footer {
 }
 
 .results-title {
-    padding-top: 20px;
+    padding-top: 10px;
+    background-color: #2C3EEB;
+    color: #D2D0D6;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
 }
 
 .results-subtitle {
     padding-bottom: 10px;
-    border-bottom: 1px black solid
+    border-bottom: 1px black solid;
+    background-color: #2C3EEB;
+    color: #D2D0D6;
+    font-size: 14px;
 }
 
 .recipe-image {
@@ -94,6 +165,9 @@ footer {
 
 .recipe-title {
     width: 50%;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
 }
 
 .recipe {
@@ -109,8 +183,13 @@ footer {
     flex-direction: column-reverse;
 }
 
-.clicked-recipe img, .clicked-recipe h3 {
-    width: 80%;
+.clicked-recipe .recipe-image {
+    width: 95%;
+}
+
+.clicked-recipe .recipe-title {
+    width: 95%;
+    font-size: 20px;
 }
 
 .youtube-link {
@@ -167,25 +246,53 @@ footer {
 .youtube-embed-caption {
     text-decoration: none;
     color: black;
-    font-size: 8px;
+    font-size: 12px;
 }
 
 .no-more-recipes {
     text-align: center;
+    font-size: 18px;
+    padding: 10px;
+    background-color: #2C3EEB;
+    color: #D2D0D6;
+}
+
+.no-results {
+    text-align: center;
+    font-size: 18px;
+    padding: 10px;
+}
+
+.more-recipe-info {
+    margin-top: 10px;
 }
 
 .recipe-details {
     text-align: center;
 }
 
-.recipe-detail-header {
-    text-decoration: underline; 
+.recipe-detail-header, .youtube-header {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+}
+
+.ingredient {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;*/
+    font-size: 14px;
 }
 
 .recipe-link {
-    display: block;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
 }
 
 a:hover {
