@@ -13,6 +13,7 @@ let totalRecipes;
 const youTubeApiKey = 'AIzaSyBZ7XLIPc0oHjQY3J9vd_3ipvRQO6QOZqs';
 const youTubeUrl = 'https://www.googleapis.com/youtube/v3/search';
 let youTubeClips;
+const youTubeClipArray = [];
 
 let waitingMessages = [
     "Whipping up some killer recipes. Sit tight!",
@@ -73,7 +74,7 @@ function logYouTubeResults(recipeId) {
                 <img class="play-icon" src="images/play-button.jpg">
                 <iframe class="youtube-embed hidden" src="https://www.youtube.com/embed/${youTubeClips.items[1].id.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
-            <div class="youtube-embed-caption">${youTubeClips.items[0].snippet.title.slice(0,48)}...</div>
+            <div class="youtube-embed-caption">${youTubeClips.items[0].snippet.title.slice(0,64)}...</div>
         </div>
         <div class="youtube-clip">
             <div class="aspect-ratio">
@@ -81,7 +82,7 @@ function logYouTubeResults(recipeId) {
                 <img class="play-icon" src="images/play-button.jpg">
                 <iframe class="youtube-embed hidden" src="https://www.youtube.com/embed/${youTubeClips.items[1].id.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
-            <div class="youtube-embed-caption">${youTubeClips.items[1].snippet.title.slice(0,48)}...</div>
+            <div class="youtube-embed-caption">${youTubeClips.items[1].snippet.title.slice(0,64)}...</div>
         </div>
         <div class="youtube-clip">
             <div class="aspect-ratio">
@@ -89,7 +90,7 @@ function logYouTubeResults(recipeId) {
                 <img class="play-icon" src="images/play-button.jpg">
                 <iframe class="youtube-embed hidden" src="https://www.youtube.com/embed/${youTubeClips.items[2].id.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
-            <div class="youtube-embed-caption">${youTubeClips.items[2].snippet.title.slice(0,48)}...</div>
+            <div class="youtube-embed-caption">${youTubeClips.items[2].snippet.title.slice(0,64)}...</div>
         </div>
         <div class="youtube-clip">
             <div class="aspect-ratio">
@@ -97,7 +98,7 @@ function logYouTubeResults(recipeId) {
                 <img class="play-icon" src="images/play-button.jpg">
                 <iframe class="youtube-embed hidden" src="https://www.youtube.com/embed/${youTubeClips.items[3].id.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
-            <div class="youtube-embed-caption">${youTubeClips.items[3].snippet.title.slice(0,48)}...</div>
+            <div class="youtube-embed-caption">${youTubeClips.items[3].snippet.title.slice(0,64)}...</div>
         </div>
     `);
     watchForYouTubeClick();
@@ -108,40 +109,41 @@ function fetchYouTubeError(error, recipeId) {
     $(`#youtube-clips-${recipeId}`).empty().append(`Something went wrong. Everybody panic!!!<br>Error Message: ${error}`);
 }
 
-//get related clips from the youtube API
+//if the recipe hasn't been clicked before, get related clips from the youtube API
 function getYouTubeClips(recipeTitle, recipeId) {
-    const params = {
-        key: youTubeApiKey,
-        q: recipeTitle,
-        part: 'snippet',
-        type: 'video',
-        videoEmbeddable: true
-    };
-    const queryString = formatQueryString(params);
-    const fetchUrl = youTubeUrl + '?' + queryString;
-    fetch(fetchUrl)
-        .then(fetchResponse => {
-            if (fetchResponse.ok) {
-                return fetchResponse.json();
-            }
-            else {
-                throw new Error(fetchResponse.statusText);
-            }
-        })
-        .then(jsonResponse => {
-            youTubeClips = jsonResponse;
-            console.log(youTubeClips);
-            if (youTubeClips.items.length < 4) {
-                noYouTubeResults(recipeId);
-            }
-            else {
-                logYouTubeResults(recipeId);
-            }
-        })
-        .catch(error => {
-            console.log(error);
-            fetchYouTubeError(error.message, recipeId);
-        });
+    if ($.inArray(recipeId, youTubeClipArray) === -1) {
+        const params = {
+            key: youTubeApiKey,
+            q: recipeTitle,
+            part: 'snippet',
+            type: 'video',
+            videoEmbeddable: true
+        };
+        const queryString = formatQueryString(params);
+        const fetchUrl = youTubeUrl + '?' + queryString;
+        fetch(fetchUrl)
+            .then(fetchResponse => {
+                if (fetchResponse.ok) {
+                    return fetchResponse.json();
+                }
+                else {
+                    throw new Error(fetchResponse.statusText);
+                }
+            })
+            .then(jsonResponse => {
+                youTubeClips = jsonResponse;
+                youTubeClipArray.push(recipeId);
+                if (youTubeClips.items.length < 4) {
+                    noYouTubeResults(recipeId);
+                }
+                else {
+                    logYouTubeResults(recipeId);
+                }
+            })
+            .catch(error => {
+                fetchYouTubeError(error.message, recipeId);
+            });
+    }
 }
 
 //watch for the user to click one of the recipes
@@ -271,14 +273,12 @@ function getRecipes() {
                     return fetchResponse.json();
                 }
                 else {
-                    console.log('throw! ' + fetchResponse.statusText);
                     throw new Error(fetchResponse.statusText);
                 }
             })
             .then(jsonResponse => {
                 returnedRecipes = jsonResponse;
                 totalRecipes = returnedRecipes.count;
-                console.log(returnedRecipes);
                 logResults();
             })
             .catch(error => {
