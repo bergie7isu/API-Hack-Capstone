@@ -72,7 +72,7 @@ function logYouTubeResults(recipeId) {
             <div class="aspect-ratio">
                 <img class="youtube-embed" src=${youTubeClips.items[0].snippet.thumbnails.default.url}>
                 <img class="play-icon" src="images/play-button.jpg">
-                <iframe class="youtube-embed hidden" src="https://www.youtube.com/embed/${youTubeClips.items[1].id.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe class="youtube-embed hidden" src="https://www.youtube.com/embed/${youTubeClips.items[0].id.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="youtube-embed-caption">${youTubeClips.items[0].snippet.title.slice(0,64)}...</div>
         </div>
@@ -298,7 +298,7 @@ function watchForLoadMoreRecipesClick() {
 function bodyPadding() {
     let headerHeight = $('header').height();
     let footerHeight = $('footer').height();
-    $('body').css({"padding-top": headerHeight + 20 + "px","padding-bottom": footerHeight});
+    $('body').css({"padding-top": headerHeight + 20 + "px","padding-bottom": footerHeight, "min-height": $(window).height()});
 }
 
 //check the body padding if the window is resized

@@ -5,6 +5,10 @@
     font-family: 'Oswald', sans-serif;
 }
 
+html {
+    background-color: black;
+}
+
 header {
     position: fixed;
     top: 0;
@@ -196,10 +200,6 @@ footer {
     font-size: 20px;
 }
 
-.youtube-link {
-    width: 20%;
-}
-
 .youtube-image {
     width: 100%;
 }
@@ -388,7 +388,12 @@ a:hover {
         font-size: 18px;
     }
     
+    .recipe-image {
+        width: 40%;
+    }
+    
     .recipe-title {
+        width: 60%;
         font-size: 22px;
     }
     
@@ -428,5 +433,133 @@ a:hover {
     
     .recipe-link {
         font-size: 22px;
+    }
+}
+
+@media screen and (min-width: 800px) {
+    .youtube-clip {
+        width: 22.5%;
+    }
+
+    .make-it-big {
+        width: 90%;
+    }
+
+    .youtube-clips-flex {
+        display: block;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    body {
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    header {
+        max-width: 1000px;
+    }
+
+    footer {
+        max-width: 1000px;
+    }
+
+    .main-title {
+        font-size: 36px;
+    }
+        
+    .sub-title {
+        font-size: 24px;
+    }
+    
+    .sub-sub-title {
+        font-size: 18px;
+    }
+    
+    .logo {
+        width: 100px;
+    }
+
+    label {
+        font-size: 24px;
+        margin-bottom: 5px;
+    }
+    
+    .find-recipes, .load-more-recipes {
+        font-size: 28px;
+    }
+        
+    input {
+        height: 45px;
+        font-size: 22px;
+    }
+    
+    .clear-ingredients {
+        font-size: 22px;
+    }
+    
+    .input-instructions {
+        font-size: 16px;
+    }
+    
+    .waiting-on-api {
+        width: 50%;
+        font-size: 26px;
+    }
+    
+    .chef-gif {
+        width: 40%;
+    }
+    
+    .results-title {
+        font-size: 32px;
+    }
+    
+    .results-subtitle {
+        font-size: 20px;
+    }
+    
+    .recipe-image {
+        width: 30%;
+    }
+    
+    .recipe-title {
+        width: 70%;
+        font-size: 28px;
+    }
+    
+    .clicked-recipe .recipe-image {
+        width: 75%;
+    }
+    
+    .clicked-recipe .recipe-title {
+        width: 75%;
+        font-size: 32px;
+    }
+            
+    .youtube-embed-caption {
+        font-size: 20px;
+    }
+    
+    .no-more-recipes {
+        font-size: 26px;
+    }
+    
+    .no-results {
+        font-size: 26px;
+    }
+    
+    .recipe-detail-header, .youtube-header {
+        font-size: 26px;
+    }
+        
+    .ingredient {
+        width: 75%;
+        font-size: 22px;
+    }
+    
+    .recipe-link {
+        font-size: 26px;
     }
 }
