@@ -6,7 +6,8 @@
 }
 
 html {
-    background-color: black;
+    background-image: url("images/background_mercury.jpg");
+    background-attachment: fixed;
 }
 
 header {
@@ -181,6 +182,15 @@ footer {
 .recipe {
     display: flex;
     align-items: center;
+    transition-property: background-color;
+    transition-duration: 0.5s;
+    transition-timing-function: linear;
+}
+
+.recipe:hover:not(.clicked-recipe) {
+    flex-direction: row-reverse;
+    cursor: pointer;
+    background-color: #FF440D;
 }
 
 .big-result {
@@ -189,6 +199,7 @@ footer {
 
 .clicked-recipe {
     flex-direction: column-reverse;
+    padding-bottom: 10px;
 }
 
 .clicked-recipe .recipe-image {
@@ -214,6 +225,14 @@ footer {
     width: 47.5%;
     display: inline-block;
     vertical-align: top;
+    transition-property: width;
+    transition-duration: 0.25s;
+    transition-timing-function: ease-in;
+}
+
+.youtube-clip:hover:not(.make-it-big) {
+    cursor: pointer;
+    width: 50%;
 }
 
 .make-it-big {
@@ -262,10 +281,6 @@ footer {
     text-align: center;
     font-size: 18px;
     padding: 10px;
-}
-
-.more-recipe-info {
-    margin-top: 10px;
 }
 
 .recipe-details {
@@ -391,7 +406,7 @@ a:hover {
     .recipe-image {
         width: 40%;
     }
-    
+
     .recipe-title {
         width: 60%;
         font-size: 22px;
@@ -439,6 +454,10 @@ a:hover {
 @media screen and (min-width: 800px) {
     .youtube-clip {
         width: 22.5%;
+    }
+
+    .youtube-clip:hover:not(.make-it-big) {
+        width: 25%;
     }
 
     .make-it-big {
@@ -528,7 +547,7 @@ a:hover {
         width: 70%;
         font-size: 28px;
     }
-    
+
     .clicked-recipe .recipe-image {
         width: 75%;
     }

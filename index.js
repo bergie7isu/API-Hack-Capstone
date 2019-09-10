@@ -1,5 +1,6 @@
 'use strict';
 
+//declare and define variables
 const edamamApiKey = 'ec19106e480a369800e071e93c658e54';
 const edamamAppId = '549c7004';
 const edamamApiUrl = 'https://api.edamam.com/search';
@@ -23,6 +24,15 @@ let waitingMessages = [
     "Please wait while a team of personal chefs prepares your recipes. Just kidding, it's only robots."
 ];
 
+let chefGifs = [
+    "chef0",
+    "chef1",
+    "chef2",
+    "chef3",
+    "chef4",
+    "chef5",
+];
+
 //reset the variables to simulate an initial page load
 function resetVariables() {
     lastRecipeToDisplay = 0;
@@ -44,24 +54,23 @@ function getIngredients(recipeId) {
     logIngredients(recipeLocator, recipeIngredients);
 }
 
-//display note in DOM that not youtube results were found
+//display note in DOM that no youtube results were found
 function noYouTubeResults(recipeId) {
     $(`#youtube-clips-${recipeId}`).empty().append('No clips available. This must be an exotic and rare recipe! Do you feel daring?');
 }
 
 //make the selected youtube clip big
 function watchForYouTubeClick() {
-    $('.youtube-embed, .play-icon').off('click');
-    $('.youtube-embed, .play-icon').on('click', function() {
+    $('.youtube-clip').off('click');
+    $('.youtube-clip').on('click', function() {    
         $('.youtube-clip').removeClass('make-it-big');
         $('iframe.youtube-embed').addClass('hidden');
         $('img.youtube-embed').removeClass('hidden');
         $('img.play-icon').removeClass('hidden');
-        $(this).parent().parent().parent().addClass('youtube-clips-flex');
-        $(this).parent().parent().addClass('make-it-big');
-        $(this).addClass('hidden');
-        $(this).siblings().addClass('hidden');
-        $(this).siblings('iframe').removeClass('hidden');
+        $(this).parent().addClass('youtube-clips-flex');
+        $(this).addClass('make-it-big');
+        $(this).children().children().addClass('hidden');
+        $(this).children().children('iframe').removeClass('hidden');
     });
 }
 
@@ -70,32 +79,32 @@ function logYouTubeResults(recipeId) {
     $(`#youtube-clips-${recipeId}`).empty().append(`
         <div class="youtube-clip">
             <div class="aspect-ratio">
-                <img class="youtube-embed" src=${youTubeClips.items[0].snippet.thumbnails.default.url}>
-                <img class="play-icon" src="images/play-button.jpg">
+                <img class="youtube-embed" src=${youTubeClips.items[0].snippet.thumbnails.default.url} alt="Thumbnail of YouTube clip #1 for ${recipeId}">
+                <img class="play-icon" src="images/play-button.jpg" alt="Play button icon">
                 <iframe class="youtube-embed hidden" src="https://www.youtube.com/embed/${youTubeClips.items[0].id.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="youtube-embed-caption">${youTubeClips.items[0].snippet.title.slice(0,64)}...</div>
         </div>
         <div class="youtube-clip">
             <div class="aspect-ratio">
-                <img class="youtube-embed" src=${youTubeClips.items[1].snippet.thumbnails.default.url}>
-                <img class="play-icon" src="images/play-button.jpg">
+                <img class="youtube-embed" src=${youTubeClips.items[1].snippet.thumbnails.default.url} alt="Thumbnail of YouTube clip #2 for ${recipeId}">
+                <img class="play-icon" src="images/play-button.jpg" alt="Play button icon">
                 <iframe class="youtube-embed hidden" src="https://www.youtube.com/embed/${youTubeClips.items[1].id.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="youtube-embed-caption">${youTubeClips.items[1].snippet.title.slice(0,64)}...</div>
         </div>
         <div class="youtube-clip">
             <div class="aspect-ratio">
-                <img class="youtube-embed" src=${youTubeClips.items[2].snippet.thumbnails.default.url}>
-                <img class="play-icon" src="images/play-button.jpg">
+                <img class="youtube-embed" src=${youTubeClips.items[2].snippet.thumbnails.default.url} alt="Thumbnail of YouTube clip #3 for ${recipeId}">
+                <img class="play-icon" src="images/play-button.jpg" alt="Play button icon">
                 <iframe class="youtube-embed hidden" src="https://www.youtube.com/embed/${youTubeClips.items[2].id.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="youtube-embed-caption">${youTubeClips.items[2].snippet.title.slice(0,64)}...</div>
         </div>
         <div class="youtube-clip">
             <div class="aspect-ratio">
-                <img class="youtube-embed" src=${youTubeClips.items[3].snippet.thumbnails.default.url}>
-                <img class="play-icon" src="images/play-button.jpg">
+                <img class="youtube-embed" src=${youTubeClips.items[3].snippet.thumbnails.default.url} alt="Thumbnail of YouTube clip #4 for ${recipeId}">
+                <img class="play-icon" src="images/play-button.jpg" alt="Play button icon">
                 <iframe class="youtube-embed hidden" src="https://www.youtube.com/embed/${youTubeClips.items[3].id.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="youtube-embed-caption">${youTubeClips.items[3].snippet.title.slice(0,64)}...</div>
@@ -182,7 +191,7 @@ function firstResultsLog() {
         for (i = firstRecipeToDisplay; i < lastRecipeToDisplay; i++) {
             $('.results').append(`<div class="big-result">
                                     <div class="recipe" id="recipe${i}">
-                                        <img class="recipe-image" src=${returnedRecipes.hits[i].recipe.image} alt="image of ${returnedRecipes.hits[i].recipe.label}"/>
+                                        <img class="recipe-image" src=${returnedRecipes.hits[i].recipe.image} alt="image of ${returnedRecipes.hits[i].recipe.label}">
                                         <h3 class="recipe-title">${returnedRecipes.hits[i].recipe.label}</h3>
                                     </div>
                                     <div class="more-recipe-info hidden" id="more-recipe-info-recipe${i}">
@@ -204,7 +213,7 @@ function additionalResultsLog() {
     for (i = firstRecipeToDisplay; i < lastRecipeToDisplay; i++) {
         $('.results').append(`<div class="big-result">
                                 <div class="recipe" id="recipe${i}">
-                                    <img class="recipe-image" src=${returnedRecipes.hits[i].recipe.image} alt="image of ${returnedRecipes.hits[i].recipe.label}"/>
+                                    <img class="recipe-image" src=${returnedRecipes.hits[i].recipe.image} alt="image of ${returnedRecipes.hits[i].recipe.label}">
                                     <h3 class="recipe-title">${returnedRecipes.hits[i].recipe.label}</h3>
                                 </div>
                                 <div class="more-recipe-info hidden" id="more-recipe-info-recipe${i}">
@@ -256,7 +265,7 @@ function getRecipes() {
     $('.load-more-recipes').addClass('hidden');
     $('.no-more-recipes').addClass('hidden');
     $('.results').empty().removeClass('hidden').append(`<h3 class="waiting-on-api">${waitingMessages[Math.floor(Math.random() * waitingMessages.length)]}</h3>
-        <img class="chef-gif" src="images/chef.gif">`);
+        <img class="chef-gif" src="images/${chefGifs[Math.floor(Math.random() * chefGifs.length)]}.gif" alt="Swedish Chef gif">`);
     setTimeout(function(){
         const requestedIngredients = $('#requested-ingredients').val();
         const params = {
@@ -278,7 +287,7 @@ function getRecipes() {
             })
             .then(jsonResponse => {
                 returnedRecipes = jsonResponse;
-                totalRecipes = returnedRecipes.count;
+                totalRecipes = returnedRecipes.hits.length;
                 logResults();
             })
             .catch(error => {
