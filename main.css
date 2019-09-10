@@ -188,7 +188,6 @@ footer {
 }
 
 .recipe:hover:not(.clicked-recipe) {
-    flex-direction: row-reverse;
     cursor: pointer;
     background-color: #FF440D;
 }
