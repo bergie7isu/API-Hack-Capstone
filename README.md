@@ -22,7 +22,7 @@ Mobile:
 <img src="screenshots/mobile-screenshot.JPG" width="300">
 
 ## Summary
-- The user inputs any combination of one or more ingredients that they want to use up. The app delivers recipes using the provided ingredients along with YouTube clips related to the selected recipe. The app was originally intended to help the user consume random and/or soon-to-spoil ingredients in his/her refrigerator, however it can also be used to find interesting recipes with any ingredients the user finds intriguing.
+- The user inputs any combination of one or more ingredients that they want to use up. The app delivers recipes using the provided ingredients along with YouTube clips related to the selected recipe. The app was originally intended to help the user consume random and/or soon-to-spoil ingredients in his/her refrigerator. It can also be used to find interesting recipes with any ingredients the user finds intriguing.
 
 ## Technologies Used
 - HTML
