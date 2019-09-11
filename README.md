@@ -6,16 +6,19 @@
 
 ## Screenshots
 Desktop:
+
 <img src="screenshots/desktop-screenshot1.jpg" width="900">
 
 <img src="screenshots/desktop-screenshot2.jpg" width="900">
 
 
 Tablet:
+
 <img src="screenshots/tablet-screenshot.JPG" width="500">
 
 
 Mobile:
+
 <img src="screenshots/mobile-screenshot.JPG" width="300">
 
 ## Summary
