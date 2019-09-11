@@ -7,6 +7,7 @@
 ## Screenshots
 Desktop:
 
+<img src="screenshots/desktop-screenshot1.jpg" width="800">
 ![Desktop Screenshot1](screenshots/desktop-screenshot1.jpg)
 
 
